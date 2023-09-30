@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mkdir -p aniket'
+                echo 'Building the application...'
+                // Add your other build commands here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                script {
+                    def testResult = performTests() // You can define your test logic here
+                    if (testResult == 'success') {
+                        echo 'Tests passed!'
+                    } else {
+                        echo 'Tests failed!'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application...'
+                // Add your deployment commands here
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Build, test, and deployment successful!'
+        }
+        failure {
+            echo 'Build, test, or deployment failed!'
+        }
+    }
+}
+
+def performTests() {
+    // Implement your test logic here and return 'success' or 'failure' based on the result
+    // For example:
+    // if (yourTestCondition) {
+    //     return 'success'
+    // } else {
+    //     return 'failure'
+    // }
+    return 'success' // Modify this based on your actual tests
+}
